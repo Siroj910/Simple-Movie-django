@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %} detail film {% endblock title %}
+
+{% block content %}
+
+<!-- this is wroong don't watch this -->
+
+        {% for vid in video %}
+
+            <h1><a href="{{ vid.get_absolute_url }}">{{ vid.name }}</a></h1>
+
+
+            <video width="500px" height="500px" controls >
+                <source src="{{ vid.videofile.url }}" type="video/mp4">
+            </video>
+        
+            <p> {{ vid.descrition }} </p>
+
+            
+
+            {% if vid.seasons %}    
+                <p>{{ vid.seasons }} fasl {{ vid.part }}-qism</p>
+
+            {% else %}
+
+                <p>Don't show season and part</p>
+            
+            {% endif %}
+
+
+        {% endfor %}
+
+        <a href="{% url 'homePage' %}">Back</a>
+
+{% endblock content %}
+
+
+
+
+
+
+
+

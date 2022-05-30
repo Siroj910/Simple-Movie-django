@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %} category {% endblock title %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <div style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; width: 100%; gap: 20px;">
+
+    {% for films in film_paginator %}
+
+    <div style="border:1px solid #333; margin: 5px; width: 30%;">
+
+        <video width="500px" height="500px" controls >
+            <source src="{{ films.videofile.url }}" type="video/mp4">
+        </video>
+
+        <h1><a href="{{ films.get_absolute_url }}">{{ films.name }}</a></h1>
+        <p>{{ films.descrition }}</p>
+
+
+        {% if films.seasons %}
+            <p>{{ films.seasons }} fasl {{ films.part }}-qism</p>
+        
+        {% else %}
+
+            <p>Don't show season and part</p>
+        {% endif %}
+
+    </div>
+
+    <br>
+    {% endfor %}
+</div>
+
+
+    <div style="font-size: 25px; text-align: center;"> 
+
+        {% if film_paginator.has_previous %}
+            <a href="?page=1" style="margin: 5px;">&laquo first</a>
+            <a href="?page={{ film_paginator.previous_page_number }}" style="margin: 5px;">previous</a>
+
+        {% endif %}
+
+        Page {{ film_paginator.number}} of  {{ film_paginator.paginator.num_pages }}
+
+        {% if film_paginator.has_next %}
+            <a href="?page={{ film_paginator.next_page_number }}" style="margin: 5px;">Next page</a>
+            <a href="?page={{ film_paginator.paginator.num_pages }}" style="margin: 5px;">Last page</a>
+        {% endif %}
+
+</div>
+<a href="{% url 'homePage' %}">Back</a>
+
+{% else %}
+    <h1>Before you must authenticate</h1>
+{% endif %}
+
+
+{% endblock content %}

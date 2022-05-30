@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %} Home page {% endblock title %}
+{% block content %}
+<div class="flex" style="display: flex; align-items: center ; justify-content: space-between; ">
+
+	<h1>Home Page</h1>
+
+	<div class="numbers"style="display: flex; align-items: center;">
+
+	{% if user.is_authenticated %}
+		{{ user.phone }}
+		<p style="margin: 10px;"><a href="{% url 'logout' %}">Log out</a></p>
+
+
+	{% else %}
+		<p>You don't have authenticate</p>
+		<a href="{% url 'login' %}">Login</a>
+		<a href="{% url 'accounts:register' %}">Register</a>
+
+	{% endif %}
+
+
+
+	
+	
+
+	</div>
+</div>
+{% if user.is_authenticated %}
+
+	
+	<form style="text-align: center;">
+		<input type="text" placeholder="search films" name="search">
+		<button type="submit">Search</button>
+	</form>
+	
+	<div style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; width: 100%; gap: 20px;">
+
+
+		{% for video in videos_paginator %}
+
+			<div style="border:1px solid #333; margin: 5px; width: 30%;">
+				
+				<video width="500px" height="500px" >
+					<source src="{{ video.videofile.url }}" type="video/mp4">
+				</video>
+
+				<h1>{{ video.name }}</h1>
+
+
+
+				<p>{{ video.descrition }}</p>
+
+			
+				{% if video.seasons %}
+					<p>{{ video.seasons }} fasl {{ video.part }}-qism</p>
+				
+				{% else %}
+
+					<p>Don't show season and part</p>
+				{% endif %}
+
+				<a href="{{ video.get_absolute_url }}"><button>Watch a video</button></a>
+
+
+			</div>
+		<br>
+
+
+
+	{% endfor %} 
+	<div style="font-size: 25px; text-align: center;"> 
+
+		{% if videos_paginator.has_previous %}
+			<a href="?page=1" style="margin: 5px;">&laquo first</a>
+			<a href="?page={{ videos_paginator.previous_page_number }}" style="margin: 5px;">previous</a>
+
+		{% endif %}
+
+		Page {{ videos_paginator.number}} of  {{ videos_paginator.paginator.num_pages }}
+
+		{% if videos_paginator.has_next %}
+			<a href="?page={{ videos_paginator.next_page_number }}" style="margin: 5px;">Next page</a>
+			<a href="?page={{ videos_paginator.paginator.num_pages }}" style="margin: 5px;">Last page</a>
+		{% endif %}
+
+</div>
+
+	
+		
+ 
+	{% else %}
+
+		<h1>before you must authenticate</h1>
+
+	{% endif %}
+
+</div>
+
+
+
+	
+	
+
+
+{% endblock content %}

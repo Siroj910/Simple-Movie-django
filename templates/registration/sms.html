@@ -1,0 +1,13 @@
+{% extends 'base.html'%}
+{% block title %}Check SMS {% endblock title %}
+
+{% block content %}
+    <h1>Send your sms code to here</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="number" placeholder="sms" value="12345" name="check-sms-code">
+        <input type="submit" value="Submit">
+    </form>
+    
+
+{% endblock content %}

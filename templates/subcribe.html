@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Subcribe</h1>
+    <div style="display: flex;margin: 10xp;padding: 10px;">
+
+    {% for subcribe in subHistory %}
+        <div style="margin: 10px;">
+            <h1>{{ subcribe.name }}</h1>
+            <h2>{{ subcribe.price }}$</h2>
+            <h1>for {{ subcribe.month}} month </h1>
+            <a href="#">Follow</a>
+        </div>
+
+    {% endfor %}
+    <a href="{% url 'homePage' %}">Back</a>
+
+    </div>
+
+
+{% endblock content %}
